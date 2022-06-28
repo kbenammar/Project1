@@ -1,7 +1,7 @@
 #importing libraries
-import datetime
+import datetime as dt
 import argparse
-import keyboard
+# import keyboard
 import board
 import busio
 import adafruit_veml7700
@@ -20,18 +20,21 @@ veml7700=adafruit_veml7700.VEML7700(i2c)
 
 #logging.basicConfig(filename=file, level=logging.DEBUG, format="%(asctime)s | %(message)s")
 
-key=keyboard.is_pressed('ENTER')
-key2=keyboard.is_pressed('Esc')
+# key=keyboard.is_pressed('ENTER')
+# key2=keyboard.is_pressed('Esc')
 
-print('Press ENTER to run the program')
+#print('Press ENTER to run the program')
 
-while key:
+var=1
+
+while var!=2:
     f=open(file,'w')
-    now=datetime.now()
-    f.write(now, 'Light level :', veml7700.lux,'lux')
+    now=dt.datetime.now()
+    lux=veml7700.lux
+    f.write(now '| Light level :' lux 'lux\n')
     time.sleep(1)
     print('Press Esc to stop the program')
     
-    if key2:
-        f.close()
-        break
+#     if key2:
+#         f.close()
+#         break

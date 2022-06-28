@@ -1,11 +1,11 @@
 #importing libraries
 import time
 import datetime as dt
-import argparse
 import numpy as np
+import argparse
 import board
 import busio
-import adafruit_veml7700
+import adafruit_tsl2591
 
 #setting the file name argument:
 parser=argparse.ArgumentParser()
@@ -16,9 +16,8 @@ print(args)
 file = args.file_name
 
 #setting upn the communication:
-i2c=busio.I2C(board.SCL,board.SDA)
-veml7700=adafruit_veml7700.VEML7700(i2c)
-
+i2c=board.I2C()
+tsl2591=adafruit_tsl2591.TSL2591(i2c)
 
 f=open(file,'w')
 
@@ -32,7 +31,7 @@ while True:
     now=dt.datetime.now()
     print(now)
     # setting measures
-    lux=veml7700.lux
+    lux=tsl2591.lux
     luxLst.append(lux)
     
     if len(luxLst)==60:
@@ -42,3 +41,4 @@ while True:
         f.write(str(data))
         luxLst.clear()
     time.sleep(1)
+

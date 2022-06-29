@@ -9,7 +9,7 @@ import adafruit_veml7700
 
 #setting the file name argument:
 parser=argparse.ArgumentParser()
-parser.add_argument("file_name", type=str, help="enter the name of the file") 
+parser.add_argument("--file_name", default="luxmeasuresVEML7700" , type=str, required=False, help="enter the name of the file") 
 
 args=parser.parse_args()
 print(args)
@@ -39,6 +39,6 @@ while True:
         #load the data 
         data={'date' : dt.datetime.now().strftime("%d/%m/%y|%H:%M:%S") , 'mean_light' : round(np.mean(luxLst),2),
               'min_light' : round(np.min(luxLst),2), 'max_light' : round(np.max(luxLst),2), 'variance' : round(np.var(luxLst),2)}
-        f.write(str(data))
+        f.write(str(data)+"\n")
         luxLst.clear()
     time.sleep(1)

@@ -27,6 +27,7 @@ delta=dt.timedelta(minutes=1)
 print('Started : ', start_time, 'timedelta= ',delta)
 
 luxLst=[]
+lightLst=[]
 while True:
     # setting time
     now=dt.datetime.now()
@@ -34,11 +35,14 @@ while True:
     # setting measures
     lux=veml7700.lux
     luxLst.append(lux)
+    light=veml7700.light
+    lightLst.append(light)
     
     if len(luxLst)==60:
         #load the data 
-        data={'date' : dt.datetime.now().strftime("%d/%m/%y|%H:%M:%S") , 'mean_light' : round(np.mean(luxLst),2),
-              'min_light' : round(np.min(luxLst),2), 'max_light' : round(np.max(luxLst),2), 'variance' : round(np.var(luxLst),2)}
+        data={'date' : dt.datetime.now().strftime("%d/%m/%y | %H:%M:%S") , 'mean_lux' : round(np.mean(luxLst),2),
+              'min_lux' : round(np.min(luxLst),2), 'max_lux' : round(np.max(luxLst),2), 'variance_lux' : round(np.var(luxLst),2), 'mean_light' : round(np.mean(lightLst),2),
+              'min_light' : round(np.min(lightLst),2), 'max_light' : round(np.max(lightLst),2), 'variance_light' : round(np.var(lightLst),2)}
         f.write(str(data)+"\n")
         luxLst.clear()
     time.sleep(1)

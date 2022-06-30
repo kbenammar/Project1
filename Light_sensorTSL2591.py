@@ -34,7 +34,7 @@ while True:
     # setting measures
     lux=tsl2591.lux
     luxLst.append(lux)
-    visible=tsl2691.visible
+    visible=tsl2591.visible
     visibleLst.append(visible)
     
     if len(luxLst)==60:

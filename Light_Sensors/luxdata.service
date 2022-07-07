@@ -1,0 +1,15 @@
+[Unit]
+Description=Test Lux service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 -u /home/kenzi/Desktop/Project1/Light_sensorTSL2591.py
+WorkingDirectory=/home/kenzi/Desktop/Project1
+StandardOutput=inherit
+StandardError=inherit
+Restart=on-failure
+RestartSec=10
+User=kenzi
+
+[Install]
+WantedBy=multi-user.target

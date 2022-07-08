@@ -2,30 +2,35 @@
 import time
 import datetime as dt
 import numpy as np
-import argparse
 import board
-import busio
 import adafruit_tsl2591
-from data import VEML as VEML
+import sqlalchemy as db
+from sqlalchemy import create_engine
 from data import TSL as TSL
 
-#setting the file name argument:
-parser=argparse.ArgumentParser()
-parser.add_argument("--file_name", default="luxmeasuresTSL2591", type=str,required=False, help="enter the name of the file") 
+# importing  mapping tool
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
 
-args=parser.parse_args()
-print(args)
-file = args.file_name
-    
-#setting upn the communication:
+# Import modules to declare columns and column data types
+from sqlalchemy import Column, Integer, DateTime, String, Float
+
+# setting connection to sql database:
+engine = create_engine('sqlite:///lux_measures.sqlite') # physical place/path to DataBase
+conn = engine.connect() # setting connection bridge to DataBase
+Base.metadata.create_all(conn) # creating one connection to DataBase
+
+from sqlalchemy.orm import Session
+session = Session(bind=engine) # Running a session (virtual temporary playground to modify database  and test)
+
+#setting up the communication with sensor:
 i2c=board.I2C()
 tsl2591=adafruit_tsl2591.TSL2591(i2c)
 
-f=open(file,'w')
-
 start_time=dt.datetime.now()
 delta=dt.timedelta(minutes=1)
-print('Started : ', start_time, 'timedelta= ',delta)
+print('Started : ', start_time, 'timedelta= ', delta, 'until : ', start_time+delta)
+
 
 luxLst=[]
 visibleLst=[]
@@ -41,10 +46,19 @@ while True:
     
     if len(luxLst)==60:
         #load the data 
-        data={'date' : dt.datetime.now().strftime("%d/%m/%y | %H:%M:%S") , 'mean_lux' : round(np.mean(luxLst),2),
-              'min_lux' : round(np.min(luxLst),2), 'max_lux' : round(np.max(luxLst),2), 'variance_lux' : round(np.var(luxLst),2), 'mean_visible' : round(np.mean(visibleLst),2),
-              'min_visible' : round(np.min(visibleLst),2), 'max_visible' : round(np.max(visibleLst),2), 'variance_visible' : round(np.var(visibleLst),2)}
-        f.write(str(data)+'\n')
+        data = TSL(date = dt.datetime.now().strftime("%y/%m/%d %H:%M:%S") , # drop seconds??
+                   mean_lux = round(np.mean(luxLst),2),
+                   min_lux = round(np.min(luxLst),2),
+                   max_lux = round(np.max(luxLst),2),
+                   variance_lux = round(np.var(luxLst),2), 
+                   mean_visible = round(np.mean(visibleLst),2),
+                   min_visible = round(np.min(visibleLst),2), 
+                   max_visible = round(np.max(visibleLst),2), 
+                   variance_visible = round(np.var(visibleLst),2)
+                   )
+        session.add(data)
+        session.commit()
         luxLst.clear()
+        visibleLst.clear()
     time.sleep(1)
 

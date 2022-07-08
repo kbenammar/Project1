@@ -45,4 +45,5 @@ while True:
               'min_light' : round(np.min(lightLst),2), 'max_light' : round(np.max(lightLst),2), 'variance_light' : round(np.var(lightLst),2)}
         f.write(str(data)+"\n")
         luxLst.clear()
+        lightLst.clear()
     time.sleep(1)

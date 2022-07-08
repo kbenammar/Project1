@@ -44,5 +44,6 @@ while True:
               'min_visible' : round(np.min(visibleLst),2), 'max_visible' : round(np.max(visibleLst),2), 'variance_visible' : round(np.var(visibleLst),2)}
         f.write(str(data)+'\n')
         luxLst.clear()
+        visibleLst.clear()
     time.sleep(1)
 

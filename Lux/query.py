@@ -24,9 +24,8 @@ def query_table(table_cls):
   table = session.query(table_cls)
   return table
 
-session=establish_connection("lux_measures")
+session=establish_connection("lux_measuresVEML")
 veml_table=query_table(VEML)
-tsl_table=query_table(TSL)
 
 for row in veml_table:
   print(row.id)
@@ -34,6 +33,10 @@ for row in veml_table:
   print(row.mean_lux)
   print(row.mean_light)
   
+session=establish_connection("lux_measuresTSL")
+tsl_table=query_table(TSL)
+
+
 for row in tsl_table:
   print(row.id)
   print(row.date)

@@ -32,10 +32,10 @@ for row in veml_table:
   print(row.id)
   print(row.date)
   print(row.mean_lux)
-  print(row.mean_visible)
+  print(row.mean_light)
   
 for row in tsl_table:
   print(row.id)
   print(row.date)
   print(row.mean_lux)
-  print(row.mean_light )
+  print(row.mean_visible )

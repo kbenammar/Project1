@@ -34,12 +34,12 @@ for row in veml_table:
     print(row.mean_light)
   
 
-session=establish_connection("lux_measuresTSL")
-tsl_table=query_table(TSL)
+#session=establish_connection("lux_measuresTSL")
+#tsl_table=query_table(TSL)
 
 
-for row in tsl_table:
-    print(row.id)
-    print(row.date)
-    print(row.mean_lux)
-    print(row.mean_visible )
+#for row in tsl_table:
+#    print(row.id)
+#    print(row.date)
+#    print(row.mean_lux)
+#    print(row.mean_visible )

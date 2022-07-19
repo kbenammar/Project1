@@ -40,3 +40,15 @@ class TSL(Base):
     min_visible = Column(Integer)
     max_visible = Column(Integer)
     variance_visible = Column(Float)
+    
+    
+class WEATHER(Base):
+    __tablename__ = 'Mart_weather'
+    weather_id = Column(Integer, primary_key=True)
+    description = Column(String)
+    temperature_celcius = Column(Float)
+    temp_feeling_celcius = Column(Float)
+    humidity_percent = Column(Integer)
+    pressure_hPa = Column(Integer)
+    visibility_meters = Column(Integer)
+    cloudiness_percent = Column(Integer)

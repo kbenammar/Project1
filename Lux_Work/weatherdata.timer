@@ -1,0 +1,9 @@
+[Unit]
+Description=Run the weatherdata.service file every hour
+
+[Timer]
+OnCalendar=hourly
+Unit=weatherdata.service
+
+[Install]
+WantedBy=timers.target

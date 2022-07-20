@@ -19,12 +19,9 @@ from sqlalchemy import create_engine
 from base_models import WEATHER,Base
 from sqlalchemy import Column, Integer, DateTime, String, Float
 
-engine = create_engine('sqlite:///weather.sqlite')
-conn = engine.connect()
-Base.metadata.create_all(conn)
 
 from sqlalchemy.orm import Session
-session = Session(bind=engine)
+
 
 start_time=dt.datetime.now()
 delta=dt.timedelta(minutes=1)
@@ -51,7 +48,14 @@ def get_weather():
     time.sleep(1)
     return weather_info
 
-if __name__ = '__main__':
-    session.add(get_weather())
+if __name__ == '__main__':
+    engine = create_engine('sqlite:////home/kenzi/Desktop/Project1/Lux_Work/weather.sqlite')
+    conn = engine.connect()
+    Base.metadata.create_all(conn)
+    session = Session(bind=engine)
+    obs = get_weather()
+    print(obs)
+    session.add(obs)
+    print("added")
     session.commit()
     

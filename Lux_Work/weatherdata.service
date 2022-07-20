@@ -1,14 +1,14 @@
 [Unit]
 Description=Weather api updates
-After=multi-user.target
+After=network.target
 
 [Service]
-Execstart=/usr/bin/python3 -u /home/kenzi/Desktop/Project1/Lux_Work/get_weather_API_intoSQL.py
+ExecStart=/usr/bin/python3 -u /home/kenzi/Desktop/Project1/Lux_Work/get_weatherAPI_intoSQL.py
 WorkingDirectory=/home/kenzi/Desktop/Project1
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-RestartSec=60
+RestartSec=10
 User=kenzi
 
 [Install]

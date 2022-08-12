@@ -17,41 +17,44 @@ def establish_connection(db_filename):
     conn = engine.connect()
     Base.metadata.create_all(conn)
     session = Session(bind=engine)
-
     return session
 
-def query_table(table_cls):
+def query_table(table_cls,db_filename):
+    session=establish_connection(db_filename)
     table = session.query(table_cls)
     return table
 
-"""
-session=establish_connection("lux_measures_veml_test_yellowbox")
-veml_table=query_table(VEML)
 
-for row in veml_table:
-    print(row.id)
-    print(row.date)
-    print(row.mean_lux)
-    print(row.mean_light)
-  
+def query_veml():
+    session=establish_connection("lux_measures_veml_test_yellowbox")
+    veml_table=query_table(VEML,"lux_measures_veml_test_yellowbox")
 
-session=establish_connection("lux_measures_tsl_out")
-tsl_table=query_table(TSL)
+    for row in veml_table:
+        print(row.id)
+        print(row.date)
+        print(row.mean_lux)
+        print(row.mean_light)
+    return "veml done"
 
+def query_tsl():
+    session=establish_connection("lux_measures_tsl_out")
+    tsl_table=query_table(TSL,"lux_measures_tsl_out")
 
-for row in tsl_table:
-    print(row.id)
-    
-    print(row.date)
-    print(row.mean_lux)
-    
-    print(row.mean_visible )
-"""
+    for row in tsl_table:
+        print(row.id)
+        print(row.date)
+        print(row.mean_lux)
+        print(row.mean_visible)
+    return "tsl_done"
 
-session=establish_connection("weather")
-weather_table=query_table(WEATHER)
+def query_weather():
+    session=establish_connection("weather")
+    weather_table=query_table(WEATHER,"weather")
 
-for row in weather_table:
-    print(row.weather_id)
-    print(row.description)
-    print(row.temperature_celcius)
+    for row in weather_table:
+        print(row.weather_id)
+        print(row.description)
+        print(row.temperature_celcius)
+    return "weather done"
+
+query_weather()

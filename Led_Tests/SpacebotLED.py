@@ -30,6 +30,11 @@ def stop_action():
     pixels.fill((0,0,0))
     pixels.show()
 
+def solid(color):
+    bri=1
+    pixels=make_pixels(bri)
+    pixels.fill(color)
+    pixels.show()
 
 def default_setup():
     bri=.3

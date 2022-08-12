@@ -37,16 +37,18 @@ def get_weather():
     language="en"
     request_url= f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units={unit}&lang={language}&appid={api_key}"
     results = requests.get(request_url).json()
-    weather_info = WEATHER(description = results["weather"][0]["description"],
-                         temperature_celcius = results["main"]["temp"],
-                         temp_feeling_celcius = results["main"]["feels_like"],
-                         humidity_percent = results["main"]["humidity"],
-                         pressure_hPa = results["main"]["pressure"],
-                         visibility_meters = results["visibility"],
-                         cloudiness_percent = results["clouds"]["all"])
+    weather_info = WEATHER(
+                        description = results["weather"][0]["description"],
+                        temperature_celcius = results["main"]["temp"],
+                        temp_feeling_celcius = results["main"]["feels_like"],
+                        humidity_percent = results["main"]["humidity"],
+                        pressure_hPa = results["main"]["pressure"],
+                        visibility_meters = results["visibility"],
+                        cloudiness_percent = results["clouds"]["all"])
  
     time.sleep(1)
     return weather_info
+
 
 if __name__ == '__main__':
     engine = create_engine('sqlite:////home/kenzi/Desktop/Project1/Lux_Work/weather.sqlite')
